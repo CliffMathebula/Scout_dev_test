@@ -12,6 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -27,10 +30,16 @@
             user-select: none;
         }
 
+        .checked {
+            color: orange;
+        }
+
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
+
+
         }
     </style>
     <link href="form-validation.css" rel="stylesheet">
@@ -232,7 +241,15 @@
                 <h5 class="card-title">{{ $blog->title }}</h5>
                 <p class="card-text">{{ $blog->content }}</p>
                 <a href="{{url('edit_post')}}/{{ $blog->author_id }}" class="btn btn-primary">Edit Post</a>
+                <a href="{{url('delete_post')}}/{{ $blog->id }}" class="btn btn-danger">Deletet</a>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
             </div>
+
+
         </div>
         @endforeach
 
