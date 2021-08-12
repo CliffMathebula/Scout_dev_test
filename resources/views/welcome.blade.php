@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title> Scout Technologies Test </title>
+    <title> Laravel Blog Project </title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
@@ -38,7 +38,7 @@
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url('/') }}">Scout Technologies Develeoper Test</a>
+        <a class="navbar-brand" href="{{ url('/') }}">Laravel Blog Post</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,7 +51,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">Sign-In</a>
                 </li>
                 @if (Route::has('register'))
                 <li class="nav-item">
@@ -63,6 +63,7 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <!-- Trigger the modal with a button -->
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">User Registration</button>
@@ -218,43 +219,21 @@
     </div>
     </div>
     </div>
-    <!-- Display Listed jobs if jobs is greater than zero -->
+
+    <!-- Display Listed blogs if blogs is greater than zero -->
     <br />
-    <p class="alert alert-success"> <strong>Listed Users</strong></p>
+    <p class="alert alert-success"> <strong>Posted Blogs</strong></p>
     <div class="card">
         <!-- looops through the listed jobs -->
-        @foreach($users as $user)
+        @foreach($blogs as $blog)
 
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">User Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Mobile Number</th>
-                    <th scope="col">Job Title</th>
-                    <th scope="col">Bio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">{{ $user->id }}</th>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->surname }}</td>
-                    <td>{{ $user->username }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->mobile }}</td>
-                    <td>{{ $user->job_title }}</td>
-                    <td>{{ $user->bio }}</td>
-                    <td><a class="btn btn-success btn-block text-warning" 
-                    href="{{url('edit_user')}}/{{ $user->id }}">
-              <strong> Edit Profile </strong></a></td>
-                </tr>
-                
-            </tbody>
-        </table>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ $blog->title }}</h5>
+                <p class="card-text">{{ $blog->content }}</p>
+                <a href="{{url('edit_post')}}/{{ $blog->author_id }}" class="btn btn-primary">Edit Post</a>
+            </div>
+        </div>
         @endforeach
 
 </body>
