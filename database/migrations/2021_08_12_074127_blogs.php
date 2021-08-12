@@ -19,6 +19,8 @@ class Blogs extends Migration
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->text('content');
+            $table->integer('rates')->unsigned()->default(0);
+            $table->timestamps();
             
         });
     }
