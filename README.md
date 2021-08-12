@@ -7,7 +7,7 @@ MySQL
 Getting Started
 First clone the application:
 
-git clone https://github.com/CliffMathebula/scout_dev_test.git
+git clone https://github.com/CliffMathebula/Blog_Post-.git
 Install PHP dependencies:
 
 composer install
