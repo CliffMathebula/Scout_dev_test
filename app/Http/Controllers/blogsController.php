@@ -20,20 +20,26 @@ class blogsController extends Controller
         return view('welcome', ['blogs' => $posts]);
     }
 
-    //select logged in user to update records
     public function select_post(Request $request)
     {
-        //request user id from the uri
-        $id = $request['id'];
-        //checks if the user is currently logged in and redirect the user to login is user is not logged in 
-        if (Auth::user()) {
+        
+        $user_id = Auth::id();
+        $author_id = $request['auth_id'];
+
+        if (Auth::user() && $user_id === $author_id) { //select logged in user to update records
+        
+        $id = $request['id']; //gets user id
+        
             $post_details = DB::table('posts')->where('id', $id)->orderBy('id', 'desc')->get();
             return view('update_post', ['post_details' => $post_details]);
         }
-        return redirect('login'); //redirects to login if user is not logged in
+        return ('<script type="text/javascript">
+                alert("This Post Belongs to Another user!");
+                window.location.href = "/";
+                </script>');
     }
 
-    //method to update user details
+    //method to update post details
     public function update_post(Request $request)
     {
         //checks if the user is currently logged in and redirect the user to login is user is not logged in 
@@ -63,11 +69,18 @@ class blogsController extends Controller
 
 
     //return view 
-    public function blog_post()
+    public function blog_post(Request $request)
     {
-        //checks if the user is currently logged in and redirect the user to login is user is not logged in 
-        if (Auth::user()) {
+        $user_id = Auth::id();
+        $author_id = $request['auth_id'];
+
+        if (Auth::user() && $user_id === $author_id) {
             return view('add_post'); //redirects to login if user is not logged in     
+        }else{
+            return ('<script type="text/javascript">
+                alert("This Post Belongs to Another user!");
+                window.location.href = "/";
+                </script>');
         }
     }
 
@@ -109,7 +122,10 @@ class blogsController extends Controller
 
     public function destroy(Request $request) //delete post for current logged in user
     {
-        if (Auth::user()) {
+        $user_id = Auth::id();
+        $author_id = $request['auth_id'];
+
+        if (Auth::user() && $user_id === $author_id) {
             $post_id = $request['post_id'];
 
             DB::delete('delete from posts where id = ?', [$post_id]);
@@ -119,7 +135,10 @@ class blogsController extends Controller
                 window.location.href = "/";
                 </script>');
         }
-        return redirect('login');
+        return ('<script type="text/javascript">
+                alert("Failed to Delete Post, Post Belongs to another User");
+                window.location.href = "/";
+                </script>');
     }
 
     public function rate_post(Request $request) //delete post for current logged in user
