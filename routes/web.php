@@ -42,6 +42,9 @@ Route::get('create_post', 'blogsController@create_post');
 //route to delete blog post 
 Route::get('delete_post/{post_id}', 'blogsController@destroy');
 
+//route to rate post 
+Route::get('rate_post/{rate_value}/{post_id}/{rate}', 'blogsController@rate_post');
+
 
 
 
