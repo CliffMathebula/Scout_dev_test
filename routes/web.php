@@ -33,4 +33,15 @@ Route::get('edit_post/{id}', 'blogsController@select_post');
 //route to update blog post 
 Route::get('post_update', 'blogsController@update_post');
 
+//route to post blog post 
+Route::get('post_blog', 'blogsController@blog_post');
+
+//route to post blog post 
+Route::get('create_post', 'blogsController@create_post');
+
+//route to delete blog post 
+Route::get('delete_post/{post_id}', 'blogsController@destroy');
+
+
+
 
