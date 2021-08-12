@@ -15,9 +15,6 @@ Install JavaScript dependencies (Optional):
 
 Run only if you would like to make changes to the front-end
 
-npm install
-Rename .env.example to .env and change the database username and password then set the app key by running the following command:
-
 php artisan key:generate --ansi
 Create a new Database and configure it in the .env then run the migrate command:
 
@@ -27,4 +24,4 @@ php artisan serve
 Don't forget to configure the default email account in the .env file.
 
 License
-This scout_dev_test application is a open-source software licensed under the MIT license.
+This application is a open-source software licensed under the MIT license.
