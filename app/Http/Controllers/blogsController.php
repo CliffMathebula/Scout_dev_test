@@ -107,18 +107,37 @@ class blogsController extends Controller
 
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request) //delete post for current logged in user
     {
         if (Auth::user()) {
             $post_id = $request['post_id'];
 
             DB::delete('delete from posts where id = ?', [$post_id]);
-            
+
             return ('<script type="text/javascript">
                 alert("Post deleted successfully");
                 window.location.href = "/";
                 </script>');
         }
         return redirect('login');
+    }
+
+    public function rate_post(Request $request) //delete post for current logged in user
+    {
+        //ggets values 
+        $post_id = $request['post_id'];
+        $rates = $request['rate_value'];
+        $old_rates = $request['rate'];
+        $total_rates = $rates + $old_rates;
+
+        //performs update of blog post
+        $post = Posts::find($post_id);
+        $post->rates = $total_rates;
+        $post->save();
+
+        return ('<script type="text/javascript">
+                        alert("Post content Updated Successfully!");
+                        window.location.href = "/";
+                        </script>');
     }
 }
