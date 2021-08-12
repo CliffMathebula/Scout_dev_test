@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Exception;
 
 class blogsController extends Controller
 {
@@ -58,5 +59,66 @@ class blogsController extends Controller
                 </script>');
         }
         return redirect('login'); //redirects to login if user is not logged in
+    }
+
+
+    //return view 
+    public function blog_post()
+    {
+        //checks if the user is currently logged in and redirect the user to login is user is not logged in 
+        if (Auth::user()) {
+            return view('add_post'); //redirects to login if user is not logged in     
+        }
+    }
+
+    public function create_post(Request $request)
+    {
+        if (Auth::user()) {
+            // validate form inputs
+            $validatedData = $request->validate([
+                'post_title' => ['required', 'string', 'max:200'],
+                'post_content' => ['required', 'string', 'max:1000']
+            ]);
+
+            $author_id = Auth::id();
+
+            $date = date('Y-m-d h:i:sa');
+
+            if (
+                Posts::create([
+                    'author_id' => $author_id,
+                    'title' => $request['post_title'],
+                    'content' => $request['post_content']
+                ])
+            ) {
+
+
+                return ('<script type="text/javascript">
+                alert("Post Created Successfully!");
+                window.location.href = "home";
+                </script>');
+            } else
+                return ('<script type="text/javascript">
+                alert("Failed to create post");
+                window.location.href = "post_blog";
+                </script>');
+        }
+        return redirect('login'); //redirects to login if user is not logged in
+
+    }
+
+    public function destroy(Request $request)
+    {
+        if (Auth::user()) {
+            $post_id = $request['post_id'];
+
+            DB::delete('delete from posts where id = ?', [$post_id]);
+            
+            return ('<script type="text/javascript">
+                alert("Post deleted successfully");
+                window.location.href = "/";
+                </script>');
+        }
+        return redirect('login');
     }
 }
